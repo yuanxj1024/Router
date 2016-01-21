@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>hashchange</title>
+    <script type="text/javascript" src="Router.js"></script>
+    <style type="text/css">
+      * {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+      
+      body {
+        width: 600px;
+        margin: 0 auto;
+      }
+      
+      .nav {
+        line-height: 38px;
+      }
+      
+      .nav a {
+        padding: 5px 10px;
+      }
+      
+      #main {
+        width: 100%;
+      }
+      #main header {
+        width: 100%;
+        height: 100px;
+        background: #90EBFF;
+      }
+      #main article {
+        width: 100%;
+        height: 200px;
+        background: #B8C0FF;
+      }
+      
+      #main footer {
+        width: 100%;
+        height: 100px;
+        background: #DEFF58;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">    
+      <a href="#">首页</a>
+      <a href="#/list">列表页</a>
+      <a href="#/view/568a12077ab6169165ef35da">内容</a>
+      <a href="#/view/123456789/edit">编辑</a>
+      <a href="#/view/123456789/7777?t=123">404页面</a>
+    </div>
+    
+    <div id="main"></div>
+    
+    <script type="text/javascript">
+    
+      /**
+       * 作者：狼族小狈
+       * QQ群：133240225
+       * 使用原生js简单的实现路由功能
+       */
+
+      
+      var oMain = document.getElementById('main');
+      
+      var app = new Router();
+      
+      app.init(function () { 
+
+        app.use(function (req) {
+          oMain.innerHTML = '';
+          oMain.innerHTML += '<header>页面头部:' + JSON.stringify(req) + '</header>';
+        });
+
+        app.get('/', function (req) {
+         oMain.innerHTML += '<article>首页:' + JSON.stringify(req) + '</article>';
+        });
+
+        app.get('/list', function (req) {
+           oMain.innerHTML += '<article>列表:' + JSON.stringify(req) + '</article>';
+        });
+
+        app.get('/view/:id', function (req) {
+           oMain.innerHTML += '<article>内容页:' + JSON.stringify(req) + '</article>';
+        });
+
+        app.get('/view/:id/edit', function (req) {
+           oMain.innerHTML += '<article>编辑:' + JSON.stringify(req) + '</article>';
+        });
+
+        app.error(function (req) {
+          oMain.innerHTML += '<article>404页面不存在额！:' + JSON.stringify(req) + '</article>';
+        });
+        
+        app.use(function (req) {
+           oMain.innerHTML += '<footer>页面底部:' + JSON.stringify(req) + '</footer>';
+        });
+        
+      });
+      
+
+    </script>
+  </body>
+</html>
